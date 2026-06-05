@@ -1,0 +1,13 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+metadata:
+  name: flask-cm
+  labels:
+{{ include "back-chart.labels" . | nindent 4 }}
+data:
+    POSTGRES_HOST: {{ .Values.global.database_connection.postgres_host | quote }}
+    POSTGRES_PORT: {{ .Values.global.database_connection.postgres_port | quote }}
+    # POSTGRES_USER: ""
+    # # POSTGRES_PASSWORD: ""
+    # # POSTGRES_DB: ""

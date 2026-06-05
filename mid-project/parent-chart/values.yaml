@@ -1,0 +1,24 @@
+postgresql:
+  auth:
+    postgresPassword: "root123" # password for user postgres (superuser)
+    username: "youssef"
+    password: "123"
+    database: "microservice_db"
+  image:
+      tag: "latest"
+
+# this won't work bitname/postgres has no service section 
+# it by default take {{.ReleaseName}}-postgresql as name of svc so you can put it here 
+  # service:
+  #   name: "postgres-headless-svc"
+  #   type: "ClusterIP"
+  #   port: 5432
+
+global:
+  database_connection:
+    # postgres-host: {{ printf "%s-postgresql" .Release.Name | quote }} # this not work so will harden it 
+    postgres_host: "todoapp-postgresql"
+    postgres_port: "5432"
+
+
+

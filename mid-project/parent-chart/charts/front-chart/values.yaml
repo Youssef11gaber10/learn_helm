@@ -1,0 +1,118 @@
+# Default values for front-chart.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# This will set the replicaset count more information can be found here: https://kubernetes.io/docs/concepts/workloads/controllers/replicaset/
+replicaCount: 1
+
+# This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
+image:
+  repository: youssef11gaber10/react-service-k8s
+  # This sets the pull policy for images.
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "latest"
+
+
+# This is to override the chart name.
+nameOverride: ""
+fullnameOverride: ""
+
+
+
+# This is for setting Kubernetes Annotations to a Pod.
+# For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+podAnnotations: {}
+# This is for setting Kubernetes Labels to a Pod.
+# For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+podLabels:  # service also take this label i put for deployments pods , if i leave both will take default values 
+  app : "react-pod"
+  
+
+
+
+
+# This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
+service:
+  # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
+  type: ClusterIP
+  name: react-svc
+  # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
+  port: 80
+  # this refer to pods take label i specify above or if i leave it blank will take default values
+  
+
+# This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: todoapp.com
+      paths:
+        - path: "/"
+          pathType: Prefix
+          backend:
+            service:
+              name: react-svc
+              port: 
+                number: 80
+        - path: "/api"
+          pathType: Prefix
+          backend:
+            service:
+              name: flask-svc
+              port: 
+                number: 5000
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources: 
+  requests:
+    memory: "128Mi"
+    cpu: "100m"
+  limits:
+    memory: "256Mi"
+    cpu: "200m"
+
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+
+
+# Additional volumes on the output Deployment definition.
+volumes: 
+  - name: nginx-conf-vol
+    configMap:
+      name: nginx-cm
+# - name: foo
+#   secret:
+#     secretName: mysecret
+#     optional: false
+
+# Additional volumeMounts on the output Deployment definition.
+volumeMounts: 
+  - name: nginx-conf-vol
+    mountPath: /etc/nginx/conf.d/default.conf
+    subPath: default.conf
+
+# - name: foo
+#   mountPath: "/etc/foo"
+#   readOnly: true
+
+# nginx: # he do this to use nginx file as reverse proxy , we use reverse proxy in ingress not in nginx.conf
+#   backend:  
+#     host: "flask-svc"
+#     port: 5000
