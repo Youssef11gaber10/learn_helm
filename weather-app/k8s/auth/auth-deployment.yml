@@ -5,7 +5,7 @@ metadata:
   namespace: default
   # no need for label for deployment it not managed by anything 
 spec:
-  replicas: 3
+  replicas: 1
   selector: # i will select pods that have that label
     matchLabels:
       app: auth-pod # untill know we like create replicasets need to define option of deployement

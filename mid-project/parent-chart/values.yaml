@@ -1,4 +1,4 @@
-postgresql:
+postgresql: # this attribute are waiting for postgresql chart need him to start your bitname/postgres chart 
   auth:
     postgresPassword: "root123" # password for user postgres (superuser)
     username: "youssef"
@@ -15,7 +15,8 @@ postgresql:
   #   port: 5432
 
 global:
-  database_connection:
+  database_connection: # becaue you give them this info from outsidd in valeus.yml can't use the release name
+  # you can user release name inside deployment.yml or inside configmap 
     # postgres-host: {{ printf "%s-postgresql" .Release.Name | quote }} # this not work so will harden it 
     postgres_host: "todoapp-postgresql"
     postgres_port: "5432"

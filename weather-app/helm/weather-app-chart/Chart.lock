@@ -1,0 +1,15 @@
+dependencies:
+- name: mysql
+  repository: https://charts.bitnami.com/bitnami
+  version: 14.0.3
+- name: auth-chart
+  repository: file://charts/auth-chart
+  version: 0.1.0
+- name: weather-chart
+  repository: file://charts/weather-chart
+  version: 0.1.0
+- name: ui-chart
+  repository: file://charts/ui-chart
+  version: 0.1.0
+digest: sha256:1662327e699be9acee5b4d2f95f57c59b17ff194bb636ccd0bad5ee15a9a62cb
+generated: "2026-06-05T17:58:45.195659273+03:00"

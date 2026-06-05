@@ -4,7 +4,7 @@ metadata:
   name: weather-deployment
   namespace: default
 spec:
-  replicas: 5 # cause it will have most loadwork of app ,the auth serivce run once
+  replicas: 1 # cause it will have most loadwork of app ,the auth serivce run once
   selector:
     matchLabels:
       app: weather-pod 
