@@ -1,0 +1,38 @@
+mysql: # are not supported  image not exist on docker hub
+  # image: 
+  #   tag: "8.0" # i can't do this becuase its not use mysql image on docker hub , they use bitname/mysql and have diff tags
+  # image: # by default it use this 
+  # registry: docker.io
+  # tag: 9.4.0-debian-12-r1
+  image:
+    registry: docker.io
+    repository: bitnamilegacy/mysql   # ✅ old images, still pullable
+    tag: "8.0.36-debian-11-r3"
+
+
+  auth:
+    username: "gaber"
+    password: "gaber123"
+    database: "weatherapp_db"
+    rootPassword: "root123"
+
+
+# This creates a PVC for MySQL data persistence.
+# A PV may be dynamically provisioned by the StorageClass.
+  primary:
+    persistence: #  this for crete pvc & pv for mysql cluster
+      enabled: true
+      size: 1Gi
+
+
+# --------------------------------------------------------------------------------------
+
+auth-chart:
+  replicaCount: 2
+
+weather-chart:
+  replicaCount: 2
+
+
+ui-chart:
+  replicaCount: 2
